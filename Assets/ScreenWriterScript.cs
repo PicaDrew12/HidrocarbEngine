@@ -13,6 +13,8 @@ public class ScreenWriterScript : MonoBehaviour
     void Start()
     {
       InitVariables();
+        HalogenareAlcan(6);
+        Print("BAG CV");
     }
 
     public void InitVariables()
@@ -28,6 +30,18 @@ public class ScreenWriterScript : MonoBehaviour
           
         }
         
+    }
+
+
+
+    public void Print(string text)
+    {
+        reactieText.text = text;
+    }
+
+    public void PrintCatalizator(string text)
+    {
+        catalizatorText.text = text;    
     }
 
     public void TypeText(string type, int carbonCount,string reactie, string catalizator)

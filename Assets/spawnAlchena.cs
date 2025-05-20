@@ -109,6 +109,7 @@ public class spawnAlchena : MonoBehaviour
 
     void Update()
     {
+        
         if (logicScript != null && logicScript.HidrogenList.Count > 1 && logicScript.HidrogenList[1] != null)
         {
             hydrogenTransform = logicScript.HidrogenList[1].transform;

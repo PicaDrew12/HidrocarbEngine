@@ -28,6 +28,7 @@ public class AlchineManager : MonoBehaviour
     }
     public void AditieHidrogenTotala()
     {
+        mainLogicScript.screenWriterScript.PrintCatalizator("DA PUL");
         Full2AdditionReactionAlchine(mainLogicScript.hidrogen,mainLogicScript.hidrogen,mainLogicScript.hidrogen,mainLogicScript.hidrogen);
     }
     public void AditieHalogen()
