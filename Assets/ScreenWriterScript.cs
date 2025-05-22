@@ -50,6 +50,7 @@ public class ScreenWriterScript : MonoBehaviour
 
     public void Print(string text, int textSize = 37, bool delay = true)
     {
+        Clear();
        string finalText = Format(text);
         reactieText.fontSize = textSize;
         reactieText.text = finalText;
@@ -63,13 +64,14 @@ public class ScreenWriterScript : MonoBehaviour
 
     IEnumerator WritingClearDelay()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(8);
         Clear();
        
     }
 
     public void PrintCatalizator(string text)
     {
+        Clear();
         catalizatorText.text = text;    
     }
 

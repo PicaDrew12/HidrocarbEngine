@@ -11,7 +11,7 @@ public class PrintEqationsScript : MonoBehaviour
 
     void Start()
     {
-        MainLogic mainLogic = GameObject.FindAnyObjectByType<MainLogic>();
+         mainLogic = GameObject.FindAnyObjectByType<MainLogic>();
     }
 
     // Update is called once per frame
@@ -20,8 +20,18 @@ public class PrintEqationsScript : MonoBehaviour
         
     }
 
+    public string FormatForAddition(string molecule, string adder, string result)
+    {
+        return $"{molecule} + {adder} => {result}";
+    }
+
     public void FormareAldehidaFormicaAlcani()
     {
         mainLogic.screenWriterScript.Print("CH4 + O2 => CH2O + H2O");
+    }
+
+    public void HalogenareAlcan(int carbonCount, string formula)
+    {
+        mainLogic.screenWriterScript.Print(FormatForAddition(formula,"Cl2",""));
     }
 }

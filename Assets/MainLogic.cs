@@ -551,7 +551,7 @@ public class MainLogic : MonoBehaviour
 
     }
 
-    public void FormulaAlcan(int carbonCount)
+    public string FormulaAlcan(int carbonCount)
     {
 
         if (carbonCount > 3)
@@ -575,6 +575,8 @@ public class MainLogic : MonoBehaviour
         }
 
         formulaHidrocarbura.text = formulaAlcan;
+        return formulaAlcan;
+
     }
 
     public void cameraLogic(int carbonCount)
@@ -662,6 +664,7 @@ public class MainLogic : MonoBehaviour
     }
     public void HalogenareAlcan()
     {
+        writeOut.HalogenareAlcan(carbonCount,FormulaAlcan(carbonCount));
         if (index < theHidrogenCount)
         {
             if (!isClorInMovement)
