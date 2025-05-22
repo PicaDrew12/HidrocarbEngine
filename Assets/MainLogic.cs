@@ -79,6 +79,7 @@ public class MainLogic : MonoBehaviour
     public int theHidrogenCount;
     public GameObject EtanUI;
     public bool hasAlcheneSubstitutionHappened;
+    public PrintEqationsScript writeOut;
     
 
 
@@ -88,7 +89,8 @@ public class MainLogic : MonoBehaviour
 
     void Start()
     {
-        
+        writeOut = GameObject.FindAnyObjectByType<PrintEqationsScript>();
+
         screenWriterScript = FindObjectOfType<ScreenWriterScript>();
         hasAlcheneSubstitutionHappened = false;
         izomerizareInput.gameObject.SetActive(false);
@@ -1495,9 +1497,12 @@ public class MainLogic : MonoBehaviour
     public void FormareaAldehidei()
     {
 
-
+        
         //look my guy here I swaped the name , where its oxigen its hydrogen sorry NVM
+        //its ok bro
         StartCoroutine(FormareaAldehideiCoroutine());
+        writeOut.FormareAldehidaFormicaAlcani();
+        
        
 
     }

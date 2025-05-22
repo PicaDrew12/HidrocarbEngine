@@ -1,5 +1,6 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 
@@ -13,8 +14,7 @@ public class ScreenWriterScript : MonoBehaviour
     void Start()
     {
       InitVariables();
-        HalogenareAlcan(6);
-        Print("BAG CV");
+        
     }
 
     public void InitVariables()
@@ -33,10 +33,39 @@ public class ScreenWriterScript : MonoBehaviour
     }
 
 
-
-    public void Print(string text)
+    public string Format(string input)
     {
-        reactieText.text = text;
+        // Convert A2 → A<sub>2</sub>
+        input = Regex.Replace(input, @"(?<letter>[A-Za-z])(?<number>\d+)", "${letter}<sub>${number}</sub>");
+
+        // Convert **bold** → <b>bold</b>
+        input = Regex.Replace(input, @"\*(.*?)\*", "<b>$1</b>");
+
+        // Convert #italic# → <i>italic</i>
+        input = Regex.Replace(input, @"#(.*?)#", "<i>$1</i>");
+
+        return input;
+    }
+
+
+    public void Print(string text, int textSize = 37, bool delay = true)
+    {
+       string finalText = Format(text);
+        reactieText.fontSize = textSize;
+        reactieText.text = finalText;
+        if (delay)
+        {
+            StartCoroutine(WritingClearDelay());
+        }
+
+        
+    }
+
+    IEnumerator WritingClearDelay()
+    {
+        yield return new WaitForSeconds(4);
+        Clear();
+       
     }
 
     public void PrintCatalizator(string text)
@@ -50,6 +79,12 @@ public class ScreenWriterScript : MonoBehaviour
         catalizatorText.text = "";
     }
 
+    public void Clear()
+    {
+        reactieText.text = "";
+        catalizatorText.text = "";
+    }
+    /*
     public string HalogenareAlcan(int carbonCount)
     {
         string additive = "Cl2";
@@ -60,6 +95,7 @@ public class ScreenWriterScript : MonoBehaviour
         }
         return final;
     }
+    */
 
 
 }
