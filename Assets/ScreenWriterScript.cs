@@ -48,25 +48,49 @@ public class ScreenWriterScript : MonoBehaviour
     }
 
 
-    public void Print(string text, int textSize = 37, bool delay = true)
+    public void Print(string text, int baseTextSize = 37, bool delay = true)
     {
         Clear();
-       string finalText = Format(text);
-        reactieText.fontSize = textSize;
-        reactieText.text = finalText;
-        if (delay)
+
+        string finalText = Format(text);
+
+        if (reactieText == null)
         {
-            StartCoroutine(WritingClearDelay());
+            Debug.LogWarning("ReactieText is not assigned.");
+            return;
         }
 
-        
+        // Adjust font size based on text length
+        int maxLength = 200; // Arbitrary value for when the font should be smallest
+        float minFontScale = 0.5f; // Minimum scale of font size (e.g., 50% of base size)
+
+        // Clamp text length factor between 0 and 1
+        float lengthFactor = Mathf.Clamp01((float)finalText.Length / maxLength);
+        float fontScale = Mathf.Lerp(1f, minFontScale, lengthFactor);
+
+        int adjustedFontSize = Mathf.RoundToInt(baseTextSize * fontScale);
+        reactieText.fontSize = adjustedFontSize;
+
+        reactieText.text = finalText;
+
+        if (delay)
+        {
+            StartCoroutine(WritingClearDelay(text));
+        }
     }
 
-    IEnumerator WritingClearDelay()
+
+    IEnumerator WritingClearDelay(string text)
     {
-        yield return new WaitForSeconds(8);
+        // Base delay values
+        float baseDelay = 3f;        // Minimum wait time
+        float delayPerChar = 0.05f;  // Extra time per character
+
+        // Calculate total delay
+        float totalDelay = baseDelay + (text.Length * delayPerChar);
+
+        yield return new WaitForSeconds(totalDelay);
         Clear();
-       
     }
 
     public void PrintCatalizator(string text)

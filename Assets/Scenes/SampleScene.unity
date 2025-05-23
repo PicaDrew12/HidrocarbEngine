@@ -1028,7 +1028,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1363747634}
         m_TargetAssemblyTypeName: MainLogic, Assembly-CSharp
-        m_MethodName: TurnOnIzomerizare
+        m_MethodName: Clear
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5773,7 +5773,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1363747634}
         m_TargetAssemblyTypeName: MainLogic, Assembly-CSharp
-        m_MethodName: DimerizareMetan
+        m_MethodName: Clear
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10212,6 +10212,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a237f81c527cfa4c84c19181fa76501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animationButtons:
+  - {fileID: 1681789641}
+  - {fileID: 135643090}
+  - {fileID: 36762752}
+  - {fileID: 355469590}
+  - {fileID: 963901709}
+  - {fileID: 941496926}
+  - {fileID: 853744944}
+  isAnimating: 0
   screenWriterScript: {fileID: 0}
   hasSubstitutionOccuredAlchine: 0
   hideOnProPlus: {fileID: 1442309194}
@@ -10277,6 +10286,7 @@ MonoBehaviour:
   theHidrogenCount: 0
   EtanUI: {fileID: 36762752}
   hasAlcheneSubstitutionHappened: 0
+  writeOut: {fileID: 0}
   minFontSize: 10
   maxFontSize: 30
   fontSizeMultiplier: 0.5
@@ -13253,7 +13263,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1363747634}
         m_TargetAssemblyTypeName: MainLogic, Assembly-CSharp
-        m_MethodName: HalogenareAlcan
+        m_MethodName: Clear
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15481,7 +15491,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1363747634}
         m_TargetAssemblyTypeName: MainLogic, Assembly-CSharp
-        m_MethodName: FormareaAldehidei
+        m_MethodName: Clear
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

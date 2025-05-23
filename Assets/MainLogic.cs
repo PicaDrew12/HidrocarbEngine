@@ -13,7 +13,8 @@ using System.Text.RegularExpressions;
 
 public class MainLogic : MonoBehaviour
 {
-    
+    public List<GameObject> animationButtons;
+    public bool isAnimating;
     public ScreenWriterScript screenWriterScript;
     public bool hasSubstitutionOccuredAlchine;
     public GameObject hideOnProPlus;
@@ -80,7 +81,9 @@ public class MainLogic : MonoBehaviour
     public GameObject EtanUI;
     public bool hasAlcheneSubstitutionHappened;
     public PrintEqationsScript writeOut;
-    
+    // Store original colors so we can restore them
+    private Dictionary<GameObject, Color> originalTextColors = new Dictionary<GameObject, Color>();
+    private Dictionary<GameObject, Color> originalImageColors = new Dictionary<GameObject, Color>();
 
 
 
@@ -89,6 +92,7 @@ public class MainLogic : MonoBehaviour
 
     void Start()
     {
+        isAnimating = false;
         writeOut = GameObject.FindAnyObjectByType<PrintEqationsScript>();
 
         screenWriterScript = FindObjectOfType<ScreenWriterScript>();
@@ -121,6 +125,7 @@ public class MainLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        SetButtonsInteractable(animationButtons, !isAnimating);
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             // Load the specified scene
@@ -653,6 +658,73 @@ public class MainLogic : MonoBehaviour
 
     }
 
+    public void ClearAnimations()
+    {
+        hasSubstitutionOccuredAlchine = false;
+        hasAlcheneSubstitutionHappened = false;
+        if (tipHidrocarbura == "Alchena")
+        {
+            AlcanParent.transform.rotation = Quaternion.Euler(0, 0, 0);
+            alcanScript.rotateEnabled = false;
+            spawnAlchenaScript.initialPosition.x = 0;
+            GameObject molecule = GameObject.FindGameObjectWithTag("Molecule");
+            logicScript.HidrogenList.Clear();
+            logicScript.HidrogenConectionsList.Clear();
+            logicScript.CarbonConection.Clear();
+            spawnAlchenaScript.carbonList.Clear();
+            logicScript.CarbonConection.Clear();
+            for (int i = molecule.transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(molecule.transform.GetChild(i).gameObject);
+            }
+            spawnAlchenaScript.GenerateMolecule(carbonCount);
+            Invoke("ClearRestore", 4);
+        }
+        else if (tipHidrocarbura == "Alchină")
+        {
+            AlcanParent.transform.rotation = Quaternion.Euler(0, 0, 0);
+            alcanScript.rotateEnabled = false;
+            spawnAlchinaScript.initialPosition.x = 0;
+            GameObject molecule = GameObject.FindGameObjectWithTag("Molecule");
+            logicScript.HidrogenList.Clear();
+            logicScript.HidrogenConectionsList.Clear();
+            logicScript.CarbonConection.Clear();
+            spawnAlchinaScript.carbonList.Clear();
+            logicScript.CarbonConection.Clear();
+            for (int i = molecule.transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(molecule.transform.GetChild(i).gameObject);
+            }
+            spawnAlchinaScript.GenerateMolecule(carbonCount);
+            Invoke("ClearRestore", 4);
+        }
+        else if (tipHidrocarbura == "Alcan")
+        {
+            HalogenareSpeed = 3f;
+            index = 0;
+            alcanScript.rotateEnabled = false;
+            spawnCarbonScript.initialPosition.x = 0;
+            GameObject molecule = GameObject.FindGameObjectWithTag("Molecule");
+            logicScript.HidrogenList.Clear();
+            logicScript.HidrogenConectionsList.Clear();
+            spawnCarbonScript.carbonList.Clear();
+            for (int i = molecule.transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(molecule.transform.GetChild(i).gameObject);
+            }
+            logicScript.HidrogenList.Clear();
+            logicScript.HidrogenConectionsList.Clear();
+            spawnCarbonScript.carbonList.Clear();
+            //spawnCarbonScript.GenerateMolecule(carbonCount);
+            Invoke("JustLeaveMeAlone", 0.5f);
+            Invoke("ClearRestore", 4);
+        }
+        numeText.text = " ";
+        reactieText.text = " ";
+        recatieTextCatalizator.text = " ";
+
+    }
+
     public void JustLeaveMeAlone()
     {
         spawnCarbonScript.GenerateMolecule(carbonCount);
@@ -664,6 +736,7 @@ public class MainLogic : MonoBehaviour
     }
     public void HalogenareAlcan()
     {
+        isAnimating = true;
         writeOut.HalogenareAlcan(carbonCount,FormulaAlcan(carbonCount));
         if (index < theHidrogenCount)
         {
@@ -924,6 +997,7 @@ public class MainLogic : MonoBehaviour
     // Coroutine to move the object over time
     private IEnumerator GlideToObject(Transform objTransform, Vector3 targetPosition, float duration)
     {
+        isAnimating = true;
         float elapsed = 0f;
         Vector3 initialPosition = objTransform.position;
 
@@ -940,6 +1014,7 @@ public class MainLogic : MonoBehaviour
         {
             alcanScript.rotateEnabledAlDoileaPtCaPrimulNuMere = true;
         }
+        isAnimating = false;
     }
 
 
@@ -1036,6 +1111,7 @@ public class MainLogic : MonoBehaviour
 
     public void OxigenareBlandaAlchene()
     {
+        isAnimating = true;
         AlcheneOxigneareMenu.SetActive(false);
         if (carbonCount == 2)
         {
@@ -1397,6 +1473,7 @@ public class MainLogic : MonoBehaviour
     }
     public void MoveAndRotateToObject(GameObject obj, Vector3 targetPosition, Quaternion targetRotation, float speed)
     {
+        isAnimating = true;
         StartCoroutine(MoveAndRotateCoroutine(obj, targetPosition, targetRotation, speed));
     }
 
@@ -1417,6 +1494,7 @@ public class MainLogic : MonoBehaviour
         // Ensure final position and rotation are exactly as desired
         obj.transform.position = targetPosition;
         obj.transform.rotation = targetRotation;
+        isAnimating = false;
     }
 
     public void AddAtomsHigher(GameObject obj, Vector3 targetPosition, float height, float speed, Quaternion? targetRotation = null)
@@ -1500,9 +1578,10 @@ public class MainLogic : MonoBehaviour
     public void FormareaAldehidei()
     {
 
-        
+
         //look my guy here I swaped the name , where its oxigen its hydrogen sorry NVM
         //its ok bro
+        isAnimating = true;
         StartCoroutine(FormareaAldehideiCoroutine());
         writeOut.FormareAldehidaFormicaAlcani();
         
@@ -1529,6 +1608,7 @@ public class MainLogic : MonoBehaviour
         GameObject firsttie = Instantiate(smallConection, new Vector3(1.63999999f, 1.22000003f, 0.0710000023f), Quaternion.Euler(353.693939f, 72.5807266f, 148.732208f));
         GameObject secondtie = Instantiate(smallConection, new Vector3(1.63999999f, 1.22000003f, -0.828000009f), Quaternion.Euler(353.693939f, 252.581f, 148.732208f));
         MakeAlcanParent(new List<GameObject> { firstOxigen, secondOxigen, firsttie, secondtie, });
+        isAnimating = false;
     }
 
 
@@ -1649,4 +1729,48 @@ public class MainLogic : MonoBehaviour
 
         return newParent;
     }
+
+    public void SetButtonsInteractable(List<GameObject> buttonParents, bool interactable)
+    {
+        foreach (GameObject parentObj in buttonParents)
+        {
+            if (parentObj == null || !parentObj.activeInHierarchy)
+                continue;
+
+            // Find all Button components in this GameObject and all children
+            UnityEngine.UI.Button[] buttons = parentObj.GetComponentsInChildren<UnityEngine.UI.Button>(includeInactive: false);
+
+            foreach (var button in buttons)
+            {
+                if (button == null || button.gameObject == null)
+                    continue;
+
+                // Set interactable state
+                button.interactable = interactable;
+
+                GameObject buttonObj = button.gameObject;
+
+                // Find TMP_Text in the button's children
+                TMP_Text text = buttonObj.GetComponentInChildren<TMP_Text>();
+                if (text != null)
+                {
+                    if (!originalTextColors.ContainsKey(buttonObj))
+                        originalTextColors[buttonObj] = text.color;
+
+                    text.color = interactable ? originalTextColors[buttonObj] : new Color(0.5f, 0.5f, 0.5f);
+                }
+
+                // Find Image component on the button itself (usually the background)
+                UnityEngine.UI.Image image = buttonObj.GetComponent<UnityEngine.UI.Image>();
+                if (image != null)
+                {
+                    if (!originalImageColors.ContainsKey(buttonObj))
+                        originalImageColors[buttonObj] = image.color;
+
+                    image.color = interactable ? originalImageColors[buttonObj] : new Color(0.7f, 0.7f, 0.7f);
+                }
+            }
+        }
+    }
+
 }
