@@ -47,6 +47,7 @@ public class ClorScript : MonoBehaviour
 
     void MoveTowardsTarget()
     {
+        mainLogic.isAnimating = true;
         mainLogic.isClorInMovement = true;
         if (targetTransform != null)
         {
@@ -81,6 +82,7 @@ public class ClorScript : MonoBehaviour
                 
                 mainLogic.ClorObject.transform.parent = GameObject.FindGameObjectWithTag("Molecule").transform;
                 alcanScript.rotateEnabled = true;
+                mainLogic.isAnimating = false;
 
 
 

@@ -23,28 +23,33 @@ public class AlchineManager : MonoBehaviour
     public void AditieHidrogenPartial()
     {
 
-        
+        mainLogicScript.alchineMenuShower();
         AdditionReactionAlchine(mainLogicScript.hidrogen,mainLogicScript.hidrogen, animationSpeed);
     }
     public void AditieHidrogenTotala()
     {
+        mainLogicScript.alchineMenuShower();
         mainLogicScript.screenWriterScript.PrintCatalizator("DA PUL");
         Full2AdditionReactionAlchine(mainLogicScript.hidrogen,mainLogicScript.hidrogen,mainLogicScript.hidrogen,mainLogicScript.hidrogen);
     }
     public void AditieHalogen()
     {
+        mainLogicScript.alchineMenuShower();
         AdditionReactionAlchine(mainLogicScript.Clor2,mainLogicScript.Clor2, animationSpeed);
     }
     public void AditieHalogenTotala()
     {
+        mainLogicScript.alchineMenuShower();
         Full2AdditionReactionAlchine(mainLogicScript.Clor2,mainLogicScript.Clor2,mainLogicScript.Clor2,mainLogicScript.Clor2);
     }
     public void AditieHidracidPartiala()
     {
+        mainLogicScript.alchineMenuShower();
         AdditionReactionAlchine(mainLogicScript.hidrogen,mainLogicScript.Clor2,animationSpeed);
     }
     public void AditieHidracidTotal()
     {
+        mainLogicScript.alchineMenuShower();
         Full2AdditionReactionAlchine(mainLogicScript.Clor2, mainLogicScript.hidrogen,mainLogicScript.Clor2, mainLogicScript.hidrogen);
     }
 
@@ -179,7 +184,8 @@ public class AlchineManager : MonoBehaviour
 
     public void WaterAdditionReactionAlchine()
     {
-       StartCoroutine(WaterAdditionReactionAlchineCourutine());
+        mainLogicScript.alchineMenuShower();
+        StartCoroutine(WaterAdditionReactionAlchineCourutine());
     }
 
     IEnumerator WaterAdditionReactionAlchineCourutine()
@@ -276,9 +282,20 @@ public class AlchineManager : MonoBehaviour
 
     }
 
+    public void AnimationManager(string Animation)
+    {
+        mainLogicScript.Clear();
+        mainLogicScript.TakeSnapshot(mainLogicScript.AlcanParent);
+        
+        Invoke(Animation, 0f);
+    }
 
+    public void Substitution()
+    {
+        SubstitutionReactionAlchine(mainLogicScript.Natrium);
+    }
 
-private void Update()
+    private void Update()
     {
         if(Input.GetKeyUp(KeyCode.V))
         {

@@ -207,14 +207,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1914521535}
         m_TargetAssemblyTypeName: AlchineManager, Assembly-CSharp
-        m_MethodName: AditieHidracidPartiala
-        m_Mode: 1
+        m_MethodName: AnimationManager
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: AditieHidracidPartiala
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &5118357
@@ -436,14 +436,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1363747634}
         m_TargetAssemblyTypeName: MainLogic, Assembly-CSharp
-        m_MethodName: HalogenareAlchene
-        m_Mode: 1
+        m_MethodName: AnimationManager
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: HalogenareAlchene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &20090146
@@ -569,14 +569,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1914521535}
         m_TargetAssemblyTypeName: AlchineManager, Assembly-CSharp
-        m_MethodName: AditieHidrogenPartial
-        m_Mode: 1
+        m_MethodName: AnimationManager
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: AditieHidrogenPartial
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &23949028
@@ -1028,7 +1028,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1363747634}
         m_TargetAssemblyTypeName: MainLogic, Assembly-CSharp
-        m_MethodName: Clear
+        m_MethodName: TurnOnIzomerizare
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2829,14 +2829,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1363747634}
         m_TargetAssemblyTypeName: MainLogic, Assembly-CSharp
-        m_MethodName: OxigenareBlandaAlchene
-        m_Mode: 1
+        m_MethodName: AnimationManager
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: OxigenareBlandaAlchene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &424879925
@@ -4314,14 +4314,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1363747634}
         m_TargetAssemblyTypeName: MainLogic, Assembly-CSharp
-        m_MethodName: SubstitutieHalogenALchena
-        m_Mode: 1
+        m_MethodName: AnimationManager
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: SubstitutieHalogenALchena
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &626027636
@@ -5773,7 +5773,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1363747634}
         m_TargetAssemblyTypeName: MainLogic, Assembly-CSharp
-        m_MethodName: Clear
+        m_MethodName: DimerizareMetan
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6039,14 +6039,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1363747634}
         m_TargetAssemblyTypeName: MainLogic, Assembly-CSharp
-        m_MethodName: HidrogenareAlchene
-        m_Mode: 1
+        m_MethodName: AnimationManager
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: HidrogenareAlchene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &815792416
@@ -6554,7 +6554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &853744945
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7696,14 +7696,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1914521535}
         m_TargetAssemblyTypeName: AlchineManager, Assembly-CSharp
-        m_MethodName: AditieHidrogenTotala
-        m_Mode: 1
+        m_MethodName: AnimationManager
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: AditieHidrogenTotala
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &961726348
@@ -7997,14 +7997,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1914521535}
         m_TargetAssemblyTypeName: AlchineManager, Assembly-CSharp
-        m_MethodName: WaterAdditionReactionAlchine
-        m_Mode: 1
+        m_MethodName: AnimationManager
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: WaterAdditionReactionAlchine
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1007983816
@@ -8724,14 +8724,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1914521535}
         m_TargetAssemblyTypeName: AlchineManager, Assembly-CSharp
-        m_MethodName: AditieHidracidTotal
-        m_Mode: 1
+        m_MethodName: AnimationManager
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: AditieHidracidTotal
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1122631151
@@ -9236,7 +9236,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1220243528
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9344,14 +9344,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1363747634}
         m_TargetAssemblyTypeName: MainLogic, Assembly-CSharp
-        m_MethodName: AditieApaAlchene
-        m_Mode: 1
+        m_MethodName: AnimationManager
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: AditieApaAlchene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1255553504
@@ -10001,14 +10001,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1363747634}
         m_TargetAssemblyTypeName: MainLogic, Assembly-CSharp
-        m_MethodName: HidracizareAlchene
-        m_Mode: 1
+        m_MethodName: AnimationManager
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: HidracizareAlchene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1350583508
@@ -10212,6 +10212,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a237f81c527cfa4c84c19181fa76501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AlchineAditieButton: {fileID: 0}
+  backupAlcanParent: {fileID: 8959119012506668663, guid: 40323502dad61ba4cbbf15d32a206038,
+    type: 3}
   animationButtons:
   - {fileID: 1681789641}
   - {fileID: 135643090}
@@ -10287,6 +10290,7 @@ MonoBehaviour:
   EtanUI: {fileID: 36762752}
   hasAlcheneSubstitutionHappened: 0
   writeOut: {fileID: 0}
+  resetOnce: 0
   minFontSize: 10
   maxFontSize: 30
   fontSizeMultiplier: 0.5
@@ -11804,15 +11808,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1914521535}
         m_TargetAssemblyTypeName: AlchineManager, Assembly-CSharp
-        m_MethodName: SubstitutionReactionAlchine
-        m_Mode: 2
+        m_MethodName: AnimationManager
+        m_Mode: 5
         m_Arguments:
-          m_ObjectArgument: {fileID: 5508046878257888359, guid: b83572cc58cf77f43902bfec3a7843a5,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Substitution
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1570122675
@@ -13263,14 +13266,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1363747634}
         m_TargetAssemblyTypeName: MainLogic, Assembly-CSharp
-        m_MethodName: Clear
-        m_Mode: 1
+        m_MethodName: AnimationManager
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: HalogenareAlcan
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1681789644
@@ -14879,14 +14882,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1363747634}
         m_TargetAssemblyTypeName: MainLogic, Assembly-CSharp
-        m_MethodName: OxigenareEnergica
-        m_Mode: 1
+        m_MethodName: AnimationManager
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: OxigenareEnergica
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1865923602
@@ -15358,14 +15361,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1914521535}
         m_TargetAssemblyTypeName: AlchineManager, Assembly-CSharp
-        m_MethodName: AditieHalogenTotala
-        m_Mode: 1
+        m_MethodName: AnimationManager
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: AditieHalogenTotala
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1898681044
@@ -15491,14 +15494,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1363747634}
         m_TargetAssemblyTypeName: MainLogic, Assembly-CSharp
-        m_MethodName: Clear
-        m_Mode: 1
+        m_MethodName: AnimationManager
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: FormareaAldehidei
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1905677539
@@ -15883,14 +15886,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1914521535}
         m_TargetAssemblyTypeName: AlchineManager, Assembly-CSharp
-        m_MethodName: AditieHalogen
-        m_Mode: 1
+        m_MethodName: AnimationManager
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: AditieHalogen
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1930553406

@@ -28,47 +28,6 @@ public class alcanScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (speedBasedOnSlider)
-        {
-            rotationSpeed = rotationSlider.value;
-        }
-
-        if (rotationToggle.isOn)
-        {
-            if (rotateEnabledAlDoileaPtCaPrimulNuMere)
-            {
-                rotateEnabled = true;
-            }
-        }
-        if (rotateEnabled)
-        {
-            // Rotate the GameObject on the Y-axis
-            transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
-        }
-
-        if (Input.GetMouseButtonDown(1)) // 1 corresponds to the right mouse button
-        {
-            // Cast a ray from the mouse position
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            // Check if the ray hits a Collider
-            if (Physics.Raycast(ray, out hit))
-            {
-                // Check if the hit object is the one you're interested in
-                if (hit.collider.gameObject == gameObject)
-                {
-                    // Perform actions when right-clicking on the object
-                    Debug.Log("Right-clicked on " + gameObject.name);
-                }
-            }
-        }
-
-        // Check if rotation is enabled
-        if (!rotationToggle.isOn)
-        {
-            RotateWithArrowKeys();
-        }
     }
 
     private void RotateWithArrowKeys()
@@ -95,7 +54,7 @@ public class alcanScript : MonoBehaviour
     [ContextMenu("Reset ROtation")]
     public void ResetRotation()
     {
-        MoveAndRotateToObject(gameObject, gameObject.transform.position, Quaternion.Euler(0, 0, 0), 1);
+       // MoveAndRotateToObject(gameObject, gameObject.transform.position, Quaternion.Euler(0, 0, 0), 1);
     }
 
     public void MoveAndRotateToObject(GameObject obj, Vector3 targetPosition, Quaternion targetRotation, float speed)

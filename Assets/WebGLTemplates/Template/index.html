@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ro">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hidrocarburi - Aplicație Educațională</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+      }
+      
+      .page-header {
+        background-color: #2a6ca6;
+        color: white;
+        padding: 20px 0;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      }
+      
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .content-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 20px;
+        width: 100%;
+      }
+      
+      .unity-wrapper {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+      
+      .guide-wrapper {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        max-width: 650px;
+        width: 100%;
+      }
+      
+      .guide-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        padding: 10px 0;
+        border-bottom: 2px solid #2a6ca6;
+      }
+      
+      .guide-header h2 {
+        color: #2a6ca6;
+        margin: 0;
+      }
+      
+      .guide-toggle {
+        font-size: 24px;
+        color: #2a6ca6;
+        transition: transform 0.3s;
+      }
+      
+      .guide-toggle.open {
+        transform: rotate(180deg);
+      }
+      
+      .guide-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease;
+      }
+      
+      .guide-content.open {
+        max-height: 2000px;
+      }
+      
+      .step {
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+      }
+      
+      .step h3 {
+        margin-top: 0;
+        color: #2a6ca6;
+      }
+      
+      .formatted-text strong {
+        font-weight: bold;
+        color: #2a6ca6;
+      }
+      
+      .formatted-text em {
+        font-style: italic;
+        color: #555;
+      }
+      
+      .formatted-text .highlight {
+        background-color: #fffacd;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+      
+      .formatted-text .big {
+        font-size: 120%;
+      }
+      
+      .formatted-text .small {
+        font-size: 85%;
+        color: #666;
+      }
+      
+      .formatted-text ul li, 
+      .formatted-text ol li {
+        margin-bottom: 8px;
+      }
+      
+      #unity-container {
+        position: relative;
+      }
+      
+      #unity-canvas {
+        background: #0A0A0A;
+        border-radius: 5px;
+      }
+      
+      #unity-loading-bar {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+      }
+      
+      #unity-logo {
+        width: 154px;
+        height: 130px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      #unity-logo:after {
+        content: "Hidrocarburi";
+        font-size: 24px;
+        font-weight: bold;
+        color: white;
+      }
+      
+      #unity-progress-bar-empty {
+        width: 141px;
+        height: 18px;
+        margin-top: 10px;
+        margin-left: 6.5px;
+        background: url('TemplateData/progress-bar-empty-dark.png') no-repeat center;
+      }
+      
+      #unity-progress-bar-full {
+        width: 0%;
+        height: 18px;
+        margin-top: 10px;
+        background: url('TemplateData/progress-bar-full-dark.png') no-repeat center;
+      }
+      
+      #unity-footer {
+        position: relative;
+        height: 38px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      #unity-build-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #2a6ca6;
+      }
+      
+      #unity-fullscreen-button {
+        cursor: pointer;
+        width: 38px;
+        height: 38px;
+        background: url('TemplateData/fullscreen-button.png') no-repeat center;
+      }
+      
+      #unity-warning {
+        position: absolute;
+        left: 50%;
+        top: 5%;
+        transform: translate(-50%);
+        background: white;
+        padding: 10px;
+        display: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      }
+      
+      .credits {
+        margin-top: 40px;
+        text-align: center;
+        font-style: italic;
+      }
+      
+      .button {
+        background-color: #2a6ca6;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+      
+      .button:hover {
+        background-color: #1e5585;
+      }
+      
+      @media (max-width: 768px) {
+        .content-wrapper {
+          flex-direction: column;
+        }
+        
+        .unity-wrapper {
+          width: 100%;
+        }
+        
+        #unity-canvas {
+          width: 100% !important;
+          height: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="page-header">
+      <h1>Hidrocarburi - Aplicație Educațională</h1>
+      <p>O unealtă interactivă pentru învățarea chimiei organice</p>
+    </header>
+    
+    <div class="container">
+      <div class="content-wrapper">
+        <div class="unity-wrapper">
+          <div id="unity-container">
+            <canvas id="unity-canvas" width="960" height="600" tabindex="-1"></canvas>
+            <div id="unity-loading-bar">
+              <div id="unity-logo"></div>
+              <div id="unity-progress-bar-empty">
+                <div id="unity-progress-bar-full"></div>
+              </div>
+            </div>
+            <div id="unity-warning"></div>
+            <div id="unity-footer">
+              <div id="unity-build-title">Hidrocarburi</div>
+              <div id="unity-fullscreen-button" title="Ecran complet"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="guide-wrapper">
+          <div class="guide-header" onclick="toggleGuide()">
+            <h2>Ghid de utilizare</h2>
+            <div class="guide-toggle">▼</div>
+          </div>
+          
+          <div class="guide-content">
+            <div class="step">
+              <h3>Pasul 1: Așteaptă încărcarea aplicației</h3>
+              <p class="formatted-text">Așteaptă să se încarce complet aplicația înainte de a interacționa.</p>
+            </div>
+            
+            <div class="step">
+              <h3>Pasul 2: Intră în ecran complet</h3>
+              <p class="formatted-text">Folosește butonul de ecran complet din colțul dreapta jos pentru o experiență optimă.</p>
+            </div>
+            
+            <div class="step">
+              <h3>Pasul 3: Apasă Start</h3>
+              <p class="formatted-text">Apasă butonul <strong>Start</strong> pentru a începe explorarea.</p>
+            </div>
+            
+            <div class="step">
+              <h3>Pasul 4: Introdu formula chimică</h3>
+              <p class="formatted-text">Introdu formula chimică în format <strong>CxHy</strong>. Sunt suportate alchene, alcani și alchine.</p>
+            </div>
+            
+            <div class="step">
+              <h3>Pasul 5: Pentru a ieși</h3>
+              <p class="formatted-text">Apasă tasta <strong>ESC</strong> pentru a ieși din aplicație sau din modul curent.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="credits">
+        <p>Aplicație realizată de Cocoș Andrei sub îndrumarea Prof. Cizmaș Dorina</p>
+        <p>&copy; 2025 (Co)2 Studio. Toate drepturile rezervate.</p>
+      </div>
+    </div>
+    
+
+    <script>
+      function toggleGuide() {
+        const content = document.querySelector('.guide-content');
+        const toggle = document.querySelector('.guide-toggle');
+        
+        content.classList.toggle('open');
+        toggle.classList.toggle('open');
+        
+        if (content.classList.contains('open')) {
+          toggle.textContent = '▲';
+        } else {
+          toggle.textContent = '▼';
+        }
+      }
+    
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var warningBanner = document.querySelector("#unity-warning");
+
+      // Shows a temporary message banner/ribbon for a few seconds, or
+      // a permanent error message on top of the canvas if type=='error'.
+      // If type=='warning', a yellow highlight color is used.
+      function unityShowBanner(msg, type) {
+        function updateBannerVisibility() {
+          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+        }
+        var div = document.createElement('div');
+        div.innerHTML = msg;
+        warningBanner.appendChild(div);
+        if (type == 'error') div.style = 'background: red; padding: 10px; border-radius: 5px;';
+        else {
+          if (type == 'warning') div.style = 'background: yellow; padding: 10px; border-radius: 5px;';
+          setTimeout(function() {
+            warningBanner.removeChild(div);
+            updateBannerVisibility();
+          }, 5000);
+        }
+        updateBannerVisibility();
+      }
+
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/Final Chimie.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/Final Chimie.data",
+        frameworkUrl: buildUrl + "/Final Chimie.framework.js",
+        codeUrl: buildUrl + "/Final Chimie.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "(Co)2 Studio",
+        productName: "Hidrocarburi",
+        productVersion: "0.2.0",
+        showBanner: unityShowBanner,
+      };
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+        container.className = "unity-mobile";
+        canvas.className = "unity-mobile";
+      } else {
+        canvas.style.width = "960px";
+        canvas.style.height = "600px";
+      }
+
+      loadingBar.style.display = "block";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+      document.body.appendChild(script);
+    </script>
+  </body>
+</html>

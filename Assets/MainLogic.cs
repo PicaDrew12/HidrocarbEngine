@@ -13,6 +13,8 @@ using System.Text.RegularExpressions;
 
 public class MainLogic : MonoBehaviour
 {
+    public GameObject AlchineAditieButton;
+    public GameObject backupAlcanParent;
     public List<GameObject> animationButtons;
     public bool isAnimating;
     public ScreenWriterScript screenWriterScript;
@@ -85,13 +87,16 @@ public class MainLogic : MonoBehaviour
     private Dictionary<GameObject, Color> originalTextColors = new Dictionary<GameObject, Color>();
     private Dictionary<GameObject, Color> originalImageColors = new Dictionary<GameObject, Color>();
 
-
+    private MoleculeSnapshot snapshot;
+    public bool resetOnce;
+  
 
 
 
 
     void Start()
     {
+        resetOnce = false;
         isAnimating = false;
         writeOut = GameObject.FindAnyObjectByType<PrintEqationsScript>();
 
@@ -151,6 +156,14 @@ public class MainLogic : MonoBehaviour
         {
             SetBackgroundColor(Color.red);
         }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            TakeSnapshot(AlcanParent);
+        }
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            RestoreSnapshot(AlcanParent);
+        }
         
     }
 
@@ -203,8 +216,15 @@ public class MainLogic : MonoBehaviour
 
 
     }
+
+    public void InitSnapshot()
+    {
+        TakeSnapshot(AlcanParent);
+    }
     public void DeterminaHidrocarbura(int carbonCount, int hidrogenCount)
     {
+        Invoke("InitSnapshot", 1.5f);
+        
         theHidrogenCount = hidrogenCount;
 
         if (carbonCount * 2 + 2 == hidrogenCount)
@@ -593,6 +613,10 @@ public class MainLogic : MonoBehaviour
 
     public void Clear()
     {
+        resetOnce = true;
+        RestoreSnapshot(AlcanParent);
+        
+        /*
         hasSubstitutionOccuredAlchine = false;
         hasAlcheneSubstitutionHappened = false;
         if (tipHidrocarbura == "Alchena")
@@ -655,79 +679,187 @@ public class MainLogic : MonoBehaviour
         numeText.text = " ";
         reactieText.text = " ";
         recatieTextCatalizator.text = " ";
-
+        */
     }
 
-    public void ClearAnimations()
+
+
+    // ---------------------------
+    // Helper: build a slash-delimited path from root to child
+    // ---------------------------
+
+    string GetTransformIndexPath(Transform child, Transform root)
     {
-        hasSubstitutionOccuredAlchine = false;
-        hasAlcheneSubstitutionHappened = false;
-        if (tipHidrocarbura == "Alchena")
+        List<int> indices = new List<int>();
+        while (child != root && child != null)
         {
-            AlcanParent.transform.rotation = Quaternion.Euler(0, 0, 0);
-            alcanScript.rotateEnabled = false;
-            spawnAlchenaScript.initialPosition.x = 0;
-            GameObject molecule = GameObject.FindGameObjectWithTag("Molecule");
-            logicScript.HidrogenList.Clear();
-            logicScript.HidrogenConectionsList.Clear();
-            logicScript.CarbonConection.Clear();
-            spawnAlchenaScript.carbonList.Clear();
-            logicScript.CarbonConection.Clear();
-            for (int i = molecule.transform.childCount - 1; i >= 0; i--)
-            {
-                Destroy(molecule.transform.GetChild(i).gameObject);
-            }
-            spawnAlchenaScript.GenerateMolecule(carbonCount);
-            Invoke("ClearRestore", 4);
+            indices.Insert(0, child.GetSiblingIndex());
+            child = child.parent;
         }
-        else if (tipHidrocarbura == "Alchină")
-        {
-            AlcanParent.transform.rotation = Quaternion.Euler(0, 0, 0);
-            alcanScript.rotateEnabled = false;
-            spawnAlchinaScript.initialPosition.x = 0;
-            GameObject molecule = GameObject.FindGameObjectWithTag("Molecule");
-            logicScript.HidrogenList.Clear();
-            logicScript.HidrogenConectionsList.Clear();
-            logicScript.CarbonConection.Clear();
-            spawnAlchinaScript.carbonList.Clear();
-            logicScript.CarbonConection.Clear();
-            for (int i = molecule.transform.childCount - 1; i >= 0; i--)
-            {
-                Destroy(molecule.transform.GetChild(i).gameObject);
-            }
-            spawnAlchinaScript.GenerateMolecule(carbonCount);
-            Invoke("ClearRestore", 4);
-        }
-        else if (tipHidrocarbura == "Alcan")
-        {
-            HalogenareSpeed = 3f;
-            index = 0;
-            alcanScript.rotateEnabled = false;
-            spawnCarbonScript.initialPosition.x = 0;
-            GameObject molecule = GameObject.FindGameObjectWithTag("Molecule");
-            logicScript.HidrogenList.Clear();
-            logicScript.HidrogenConectionsList.Clear();
-            spawnCarbonScript.carbonList.Clear();
-            for (int i = molecule.transform.childCount - 1; i >= 0; i--)
-            {
-                Destroy(molecule.transform.GetChild(i).gameObject);
-            }
-            logicScript.HidrogenList.Clear();
-            logicScript.HidrogenConectionsList.Clear();
-            spawnCarbonScript.carbonList.Clear();
-            //spawnCarbonScript.GenerateMolecule(carbonCount);
-            Invoke("JustLeaveMeAlone", 0.5f);
-            Invoke("ClearRestore", 4);
-        }
-        numeText.text = " ";
-        reactieText.text = " ";
-        recatieTextCatalizator.text = " ";
-
+        return string.Join("/", indices);
     }
+
+    // Traverse a hierarchy using index path
+    Transform FindByIndexPath(Transform root, string path)
+    {
+        string[] tokens = path.Split('/');
+        Transform current = root;
+        foreach (string token in tokens)
+        {
+            if (int.TryParse(token, out int index))
+            {
+                if (index >= 0 && index < current.childCount)
+                    current = current.GetChild(index);
+                else
+                    return null;
+            }
+            else return null;
+        }
+        return current;
+    }
+
+    private string GetTransformPath(Transform child, Transform root)
+    {
+        string path = child.name;
+        var current = child.parent;
+        while (current != null && current != root)
+        {
+            path = current.name + "/" + path;
+            current = current.parent;
+        }
+        return path;
+    }
+
+    // ---------------------------
+    // Helper: turn List<string> paths into List<GameObject>
+    // ---------------------------
+    private List<GameObject> ResolvePaths(Transform root, List<string> paths)
+    {
+        var result = new List<GameObject>();
+        foreach (var p in paths)
+        {
+            var t = root.Find(p);
+            if (t != null)
+                result.Add(t.gameObject);
+        }
+        return result;
+    }
+
+    // ---------------------------
+    // TakeSnapshot: record paths (List<string>), not references
+    // ---------------------------
+    public void TakeSnapshot(GameObject target)
+    {
+        if (snapshot != null && snapshot.snapshotObject != null)
+            Destroy(snapshot.snapshotObject);
+
+        // Clone the target molecule and disable it
+        var clone = Instantiate(target);
+        clone.SetActive(false);
+
+        // Disable all scripts so it doesn’t run in scene
+        foreach (var mb in clone.GetComponentsInChildren<MonoBehaviour>(true))
+            mb.enabled = false;
+
+        // Grab all relevant lists from your logic/spawn scripts.
+        // Example: get the carbon list depending on hydrocarbon type
+        var carbList = GetCarbonListForType(); // implement this to get your carbon list
+
+        // Helper to get IDs from GameObject lists
+        List<string> GetIDsFromList(List<GameObject> list)
+        {
+            return list.Select(go => go.GetComponent<ID>().id).ToList();
+        }
+
+        var carbonIDs = GetIDsFromList(carbList);
+        var hydrogenIDs = GetIDsFromList(logicScript.HidrogenList);
+        var hydrogenConnectionIDs = GetIDsFromList(logicScript.HidrogenConectionsList);
+        var carbonConnectionIDs = GetIDsFromList(logicScript.CarbonConection);
+
+        snapshot = new MoleculeSnapshot(clone, carbonIDs, hydrogenIDs, hydrogenConnectionIDs, carbonConnectionIDs);
+    }
+
+
+    // ---------------------------
+    // RestoreSnapshot: instantiate clone, then rebuild lists by path
+    // ---------------------------
+    public void RestoreSnapshot(GameObject currentMolecule)
+    {
+        if (snapshot == null || snapshot.snapshotObject == null)
+        {
+            Debug.LogWarning("No snapshot to restore.");
+            return;
+        }
+
+        // Instantiate the saved snapshot clone in the same position/rotation
+        var restored = Instantiate(
+            snapshot.snapshotObject,
+            currentMolecule.transform.position,
+            currentMolecule.transform.rotation
+        );
+        restored.transform.localScale = snapshot.snapshotObject.transform.localScale;
+        restored.name = currentMolecule.name;
+
+        // Replace the current molecule
+        Destroy(currentMolecule);
+        AlcanParent = restored;
+
+        // Clear all lists before repopulating
+        logicScript.HidrogenList.Clear();
+        logicScript.HidrogenConectionsList.Clear();
+        logicScript.CarbonConection.Clear();
+        GetCarbonListForType().Clear(); // Clear your carbon list similarly
+
+        // Helper: Resolve GameObjects by their stored IDs inside the restored clone
+        List<GameObject> ResolveByID(GameObject root, List<string> ids)
+        {
+            var allIDs = root.GetComponentsInChildren<ID>(true);
+            var result = new List<GameObject>();
+            foreach (var id in ids)
+            {
+                var match = allIDs.FirstOrDefault(x => x.id == id);
+                if (match != null)
+                    result.Add(match.gameObject);
+                else
+                    Debug.LogWarning($"RestoreSnapshot: Missing object with ID {id}");
+            }
+            return result;
+        }
+
+        // Rebuild lists with resolved references
+        var newCarbons = ResolveByID(restored, snapshot.carbonIDs);
+        var newHydrogens = ResolveByID(restored, snapshot.hydrogenIDs);
+        var newHConns = ResolveByID(restored, snapshot.hydrogenConnectionIDs);
+        var newCConns = ResolveByID(restored, snapshot.carbonConnectionIDs);
+
+        SetCarbonListForType(newCarbons); // Implement this to set carbon list in spawn script
+        logicScript.HidrogenList.AddRange(newHydrogens);
+        logicScript.HidrogenConectionsList.AddRange(newHConns);
+        logicScript.CarbonConection.AddRange(newCConns);
+
+        AlcanParent.SetActive(true);
+    }
+
+
+    private List<GameObject> GetCarbonListForType()
+    {
+        if (tipHidrocarbura == "Alchena") return spawnAlchenaScript.carbonList;
+        if (tipHidrocarbura == "Alchină") return spawnAlchinaScript.carbonList;
+        return spawnCarbonScript.carbonList;
+    }
+
+    private void SetCarbonListForType(List<GameObject> list)
+    {
+        if (tipHidrocarbura == "Alchena") spawnAlchenaScript.carbonList = list;
+        else if (tipHidrocarbura == "Alchină") spawnAlchinaScript.carbonList = list;
+        else spawnCarbonScript.carbonList = list;
+    }
+
 
     public void JustLeaveMeAlone()
     {
         spawnCarbonScript.GenerateMolecule(carbonCount);
+      
     }
     public void ClearRestore()
     {
@@ -1213,7 +1345,11 @@ public class MainLogic : MonoBehaviour
     }
 
     public void Resetare()
-    {
+    {/*
+        Destroy(AlcanParent);
+        GameObject backup = Instantiate(backupAlcanParent);
+        AlcanParent = backup;
+        */
         hasSubstitutionOccuredAlchine = false;
         hasAlcheneSubstitutionHappened = false;
         HalogenareSpeed = 3f;
@@ -1224,7 +1360,7 @@ public class MainLogic : MonoBehaviour
 
         alcanScript.rotateEnabled = false;
         spawnCarbonScript.initialPosition.x = 0;
-        GameObject molecule = GameObject.FindGameObjectWithTag("Molecule");
+        GameObject molecule = AlcanParent;
         logicScript.HidrogenList.Clear();
         logicScript.HidrogenConectionsList.Clear();
         logicScript.CarbonConection.Clear();
@@ -1772,5 +1908,12 @@ public class MainLogic : MonoBehaviour
             }
         }
     }
-
+    public void AnimationManager(string Animation)
+    {
+        Clear();
+        TakeSnapshot(AlcanParent);
+        
+        //Clear();
+        Invoke(Animation, 0f);
+    }
 }
